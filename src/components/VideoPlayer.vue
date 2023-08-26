@@ -52,7 +52,7 @@ export default {
         pause() {
             if (this.$refs.video) {
                 this.$refs.video.pause();
-                this.$emite('paused');
+                this.$emit('paused');
             }
         },
         load() {
