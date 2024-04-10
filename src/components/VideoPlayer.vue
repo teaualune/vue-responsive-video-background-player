@@ -64,6 +64,10 @@ export default {
             }, 1000);
         },
         play() {
+            // if (this._suspended) {
+            //     this._suspended = false;
+            //     return;
+            // }
             this.setPlaybackRate();
             this.$refs.video.play();
             this.show();
@@ -105,6 +109,16 @@ export default {
             this.$refs.video.onerror = this.videoError;
             this.$refs.video.onended = this.videoEnded;
         }
+        this._onSuspend = () => {
+            this._suspended = true;
+            setTimeout(() => {
+                this.pause();
+            }, 100);
+        };
+        this.$refs.video.addEventListener('suspend', this._onSuspend);
+    },
+    beforeUnmount() {
+        this.$refs.video.removeEventListener('suspend', this._onSuspend);
     },
 };
 </script>
